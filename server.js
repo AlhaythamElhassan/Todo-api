@@ -19,7 +19,7 @@ app.get('/todos', function(req, res) {
 	var query = req.query;
 	var where = {};
 
-	if (query.hasOwnProperty('completed') && query.completed === 'true'){
+	if (query.hasOwnProperty('completed') && query.completed === 'true') {
 		where.completed = true;
 	} else if (query.hasOwnProperty('completed') && query.completed === 'false') {
 		where.completed = false;
@@ -65,7 +65,6 @@ app.post('/todos', function(req, res) {
 		res.status(400).json(e);
 	});
 });
-
 // DELETE /todos:id
 app.delete('/todos/:id', function(req, res) {
 	var todoID = parseInt(req.params.id, 10);
@@ -87,7 +86,6 @@ app.delete('/todos/:id', function(req, res) {
 		});
 	});
 });
-
 // PUT /todos/:id
 app.put('/todos/:id', function(req, res) {
 	var todoID = parseInt(req.params.id, 10);
@@ -113,7 +111,6 @@ app.put('/todos/:id', function(req, res) {
 		return res.status(400).send();
 	}
 
-	// HERE 
 	_.extend(matchedTodo, validAttributes);
 	res.json(matchedTodo);
 });
