@@ -71,7 +71,12 @@ app.delete('/todos/:id', function(req, res) {
 	db.todo.destroy({
 		where: {
 			id: todoID
+<<<<<<< HEAD
 		}
+=======
+		},
+		truncate: true
+>>>>>>> ca49064062df99d739a3b91e2701477bda05babb
 	}).then(function(rowsDeleted) {
 		if (rowsDeleted === 0) {
 			res.status(400).json({
