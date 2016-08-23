@@ -13,10 +13,11 @@ if (env === 'production') {
 	});
 }
 
+var modelsPath = __dirname + '/models/';
+var db = {}; 
 
-var db = {};
-
-db.todo = sequelize.import(__dirname + '/models/todo.js');
+db.todo = sequelize.import(modelsPath + 'todo.js');
+db.user = sequelize.import(modelsPath + 'user.js')
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
