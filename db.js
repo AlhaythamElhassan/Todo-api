@@ -17,7 +17,8 @@ var modelsPath = __dirname + '/models/';
 var db = {}; 
 
 db.todo = sequelize.import(modelsPath + 'todo.js');
-db.user = sequelize.import(modelsPath + 'user.js')
+db.user = sequelize.import(modelsPath + 'user.js');
+db.token = sequelize.import(modelsPath + 'token.js');
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
