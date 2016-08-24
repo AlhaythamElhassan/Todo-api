@@ -18,7 +18,7 @@ app.get('/', function(req, res) {
 });
 
 // GET /todos?completed=false&q=work
-app.get('/todos',middleware.requireAuthentication, function(req, res) {
+app.get('/todos', middleware.requireAuthentication, function(req, res) {
 	var query = req.query;
 	var where = {};
 
@@ -44,7 +44,7 @@ app.get('/todos',middleware.requireAuthentication, function(req, res) {
 });
 
 // GET /todos/:id
-app.get('/todos/:id', middleware.requireAuthentication,function(req, res) {
+app.get('/todos/:id', middleware.requireAuthentication, function(req, res) {
 	var todoId = parseInt(req.params.id, 10);
 
 	db.todo.findById(todoId).then(function(todo) {
@@ -59,18 +59,22 @@ app.get('/todos/:id', middleware.requireAuthentication,function(req, res) {
 });
 
 // POST /todos
-app.post('/todos', middleware.requireAuthentication,function(req, res) {
+app.post('/todos', middleware.requireAuthentication, function(req, res) {
 	var body = _.pick(req.body, 'description', 'completed');
 
 	db.todo.create(body).then(function(todo) {
-		res.json(todo.toJSON());
+		req.user.addTodo(todo).then(function() {
+			return todo.reload();
+		}).then(function(todo) {
+			res.json(todo.toJSON());
+		});
 	}, function(e) {
 		res.status(400).json(e);
 	});
 });
 
 // DELETE /todos/:id
-app.delete('/todos/:id', middleware.requireAuthentication,function(req, res) {
+app.delete('/todos/:id', middleware.requireAuthentication, function(req, res) {
 	var todoId = parseInt(req.params.id, 10);
 
 	db.todo.destroy({
@@ -91,7 +95,7 @@ app.delete('/todos/:id', middleware.requireAuthentication,function(req, res) {
 });
 
 // PUT /todos/:id
-app.put('/todos/:id',middleware.requireAuthentication ,function(req, res) {
+app.put('/todos/:id', middleware.requireAuthentication, function(req, res) {
 	var todoId = parseInt(req.params.id, 10);
 	var body = _.pick(req.body, 'description', 'completed');
 	var attributes = {};
